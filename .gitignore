@@ -1,0 +1,24 @@
+# Visual Studio
+.vs/
+**/.vs/
+
+# Build output
+**/bin/
+**/obj/
+
+# User-specific files
+*.user
+
+# React
+**/node_modules/
+**/dist/
+
+# Environment
+.env
+**/.env
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
