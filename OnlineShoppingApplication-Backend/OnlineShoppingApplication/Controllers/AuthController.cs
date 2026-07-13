@@ -9,6 +9,7 @@ namespace OnlineShoppingApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

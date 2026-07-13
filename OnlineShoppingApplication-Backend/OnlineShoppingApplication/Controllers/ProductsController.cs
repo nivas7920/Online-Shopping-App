@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShoppingApplication.Data;
 using OnlineShoppingApplication.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace OnlineShoppingApplication.Controllers
 {
     /// <summary>
@@ -10,6 +10,7 @@ namespace OnlineShoppingApplication.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

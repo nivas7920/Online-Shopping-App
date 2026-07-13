@@ -22,7 +22,28 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+//manage token expiry
+api.interceptors.response.use(
+    response => {
+        console.log("✅ API Success:", response.status);
+        return response;
+    },
+    error => {
 
+        console.log("❌ API Error:", error.response?.status);
+
+        if (error.response?.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    if (window.location.pathname !== "/login") {
+        window.location.replace("/login");
+    }
+}
+
+        return Promise.reject(error);
+    }
+);
 // =========================
 // Authentication APIs
 // =========================

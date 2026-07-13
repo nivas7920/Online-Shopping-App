@@ -20,16 +20,15 @@ function App() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
     const initializeCart = async () => {
       if (cartId) return;
 
-      try {
-        const response = await createCart();
-        const newCartId = response.data.id || response.data.cartId;
-        setCartId(newCartId);
-      } catch (err) {
-        console.error("Unable to create cart", err);
-      }
+      const response = await createCart();
+      setCartId(response.data.id || response.data.cartId);
     };
 
     initializeCart();
@@ -46,13 +45,15 @@ function App() {
             <Route
               path="/"
               element={
-                <Home
-                  cartId={cartId}
-                  setCartId={setCartId}
-                  cartCount={cartCount}
-                  setCartCount={setCartCount}
-                  onCartChanged={refreshCartCount}
-                />
+                <ProtectedRoute>
+                  <Home
+                    cartId={cartId}
+                    setCartId={setCartId}
+                    cartCount={cartCount}
+                    setCartCount={setCartCount}
+                    onCartChanged={refreshCartCount}
+                  />
+                </ProtectedRoute>
               }
             />
 

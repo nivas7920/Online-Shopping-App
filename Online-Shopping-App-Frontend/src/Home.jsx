@@ -8,37 +8,43 @@ const Home = ({ cartId, setCartId, cartCount, setCartCount, onCartChanged }) => 
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-    const initializeCart = async () => {
-      try {
-        const response = await createCart();
-        const newCartId = response.data.id || response.data.cartId;
+  const token = localStorage.getItem("token");
+  if (!token) return;
 
-        setCartId(newCartId);
-        onCartChanged();
-      } catch (err) {
-        console.error('Unable to create cart', err);
-      }
-    };
+  const initializeCart = async () => {
+    try {
+      const response = await createCart();
+      const newCartId = response.data.id || response.data.cartId;
 
-    if (!cartId) {
-      initializeCart();
+      setCartId(newCartId);
+      onCartChanged();
+    } catch (err) {
+      console.error(err);
     }
-  }, [cartId, onCartChanged, setCartId]);
+  };
 
-  useEffect(() => {
-    const loadSummary = async () => {
-      if (!cartId) return;
+  if (!cartId) {
+    initializeCart();
+  }
+}, [cartId, onCartChanged, setCartId]);
 
-      try {
-        const response = await getCartSummary(cartId);
-        setSummary(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
 
-    loadSummary();
-  }, [cartId, cartCount]);
+  const loadSummary = async () => {
+    if (!cartId) return;
+
+    try {
+      const response = await getCartSummary(cartId);
+      setSummary(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  loadSummary();
+}, [cartId, cartCount]);
 
   const handleAddToCart = async (product) => {
     if (!cartId) return;

@@ -47,7 +47,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidAudience = builder.Configuration["Jwt:Audience"],
 
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+
+        ClockSkew = TimeSpan.Zero // <-- Add this line
     };
 });
 
@@ -60,7 +62,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+Console.WriteLine("JWT Expiry = " + builder.Configuration["Jwt:ExpiryInMinutes"]);
+Console.WriteLine("Environment = " + builder.Environment.EnvironmentName);
 var app = builder.Build();
 
 // Configure HTTP Request Pipeline
