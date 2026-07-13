@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginUser } from "../api";
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -101,15 +103,29 @@ const Login = () => {
               Password
             </label>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-700 outline-none transition-all duration-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-200"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 pr-12 text-slate-700 outline-none transition-all duration-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-200"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-4 flex items-center text-gray-500 hover:text-violet-600"
+              >
+                {showPassword ? (
+                  <FaEyeSlash size={18} />
+                ) : (
+                  <FaEye size={18} />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Login Button */}

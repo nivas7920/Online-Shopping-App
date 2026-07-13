@@ -33,8 +33,8 @@ api.interceptors.response.use(
         console.log("❌ API Error:", error.response?.status);
 
         if (error.response?.status === 401) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
     if (window.location.pathname !== "/login") {
         window.location.replace("/login");
